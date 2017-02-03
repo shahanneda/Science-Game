@@ -22,21 +22,25 @@ namespace Main{
 		
 		// Update is called once per frame
 		void Update () {
+			
 			if (GameTab.IsMouseOver) {
-				
+				//print ("MOUSE ENTER GAME TAB");
 
 			} 
 
 			if (ItemsTab.IsMouseOver) {
-
+				//print ("MOUSE ENTER ITEM TAB");
 
 			}
 		}
 
-		void OnMouseOver(){
-
-			//GameTab.IsMouseOver = true;
-			//ItemsTab.IsMouseOver = false;
+		public void PointerEnter(){
+			ItemsTab.IsMouseOver = false;
+			GameTab.IsMouseOver = true;
+		}
+		public void PointerExit(){
+			ItemsTab.IsMouseOver = true;
+			GameTab.IsMouseOver = false;
 
 		}
 

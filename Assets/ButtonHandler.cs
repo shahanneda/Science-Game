@@ -7,6 +7,7 @@ namespace Main{
 		private Button myButton;
 		public GameObject MyObjectInGamePrefab;
 		private GameObject myDescription;
+		public GameObject myDescriptionHolder;
 		float coolDown = 100;
 		void OnEnable(){
 			SetInitialReferences();
@@ -14,7 +15,8 @@ namespace Main{
 		}
 
 		void OnDisable(){
-
+			OnDelete ();
+			//myDescription.SetActive(false);	
 		}
 
 		void SetInitialReferences(){
@@ -45,6 +47,7 @@ namespace Main{
 
 		void ConvertToGameObject(){
 			//MyObjectInGamePrefab.SetActive (true);
+			OnDelete();
 			gameObject.SetActive (false);
 			GameObject objectInGame = Instantiate (MyObjectInGamePrefab) as GameObject;
 			objectInGame.name = MyObjectInGamePrefab.name;
@@ -56,11 +59,40 @@ namespace Main{
 		}
 
 		public void OnMouseEnter(){
+
+			foreach (GameObject thisgameobject in GameObject.FindGameObjectsWithTag("Description")) {
+				thisgameobject.SetActive(true);
+				thisgameobject.transform.SetParent (thisgameobject.GetComponent<DescHandler> ().myParent.transform);
+				thisgameobject.transform.SetSiblingIndex (0);
+				thisgameobject.SetActive(false);
+
+
+			}
+
+			myDescription.transform.SetParent (myDescriptionHolder.transform);
 			myDescription.SetActive(true);
+			ItemsTab.IsMouseOver = true;
 
 		}
 		public void OnMouseExit(){
+			myDescription.transform.SetParent (transform);
 			myDescription.SetActive(false);
+			ItemsTab.IsMouseOver = false;
+		}
+
+		public void OnDelete(){
+			try {
+				foreach (GameObject thisgameobject in GameObject.FindGameObjectsWithTag("Description")) {
+					thisgameobject.SetActive(true);
+					thisgameobject.transform.SetParent (thisgameobject.GetComponent<DescHandler> ().myParent.transform);
+					thisgameobject.transform.SetSiblingIndex (0);
+					thisgameobject.SetActive(false);
+
+
+				}
+			} catch (System.Exception ex) {
+				
+			}
 
 		}
 	}

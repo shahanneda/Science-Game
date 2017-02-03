@@ -31,6 +31,7 @@ namespace Main{
 		}
 
 		public void PointerEnter(){
+			
 			ItemsTab.IsMouseOver = true;
 			GameTab.IsMouseOver = false;
 		}

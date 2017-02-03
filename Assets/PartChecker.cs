@@ -4,8 +4,7 @@ using System.Collections;
 namespace Main{
 	public class PartChecker : MonoBehaviour {
 		public GameObject[] itemsNeeded;
-		private string neededString;
-		private string gotString;
+
 		void OnEnable(){
 			SetInitialReferences();
 		}
@@ -29,49 +28,54 @@ namespace Main{
 		}
 
 		public void CheckForSubmit(){
-			
+			bool isCorrect = true;
+			bool isNotCorrect = false;
+			int numberinneeded = itemsNeeded.Length;
+
+
+			int numberwegot = 0;
+			foreach(Transform thistransform in GameObject.FindGameObjectWithTag("Parts").transform){
+				numberwegot++;
+				bool foundthistransforminitemsneeded = false;
 
 
 
+				foreach (GameObject thisgameobject  in itemsNeeded) {
+					if (thisgameobject.name == thistransform.name) {
+						foundthistransforminitemsneeded = true;
 
-			bool correct = true;
-			bool foundItemInArray = true;
-			bool ALLBREAKLOOSE = false;
-			int counter = 0;
-			foreach (Transform childTransform in transform) {
-				counter++;
-
-				foreach (GameObject item in itemsNeeded) {
-
-					if (childTransform.name == item.name && foundItemInArray != false) {
-						foundItemInArray = true;
-						print ("Found that " + childTransform.name +"==" +item.name );
-					}
-					if (childTransform.name != item.name) {
-						foundItemInArray = false;
-						ALLBREAKLOOSE = true;
-						print ("Found that " + childTransform.name +"!=" +item.name );
 					}
 				}
-
-				//neededString += item.transform.name;
-				if (!foundItemInArray || ALLBREAKLOOSE == true) {
-					correct = false;
-					print ("all hail broke loose" + ALLBREAKLOOSE);
+				if (foundthistransforminitemsneeded != true) {
+					isCorrect = false;
+					isNotCorrect = true;
 				}
+
+				print (thistransform.name + foundthistransforminitemsneeded);
+
+
+
 			}
 
-			if (counter == 0) {
-				correct = false;
+			if (isCorrect && !isNotCorrect && numberwegot == numberinneeded) {
+				isCorrect = true;
+				print ("what we got?  " + numberwegot);
+				print ("what we need  " + numberinneeded);
+			} else {
+				isCorrect = false;
+
 			}
+			print ("Is Correct? " + isCorrect);
 
 
-			print (correct);
+		
+
+
+
 			//print (neededString);
 			//print (gotString);
 
-			gotString = "";
-			neededString = "";
+			print (isCorrect);
 
 		}
 	}
